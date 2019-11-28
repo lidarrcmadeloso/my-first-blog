@@ -13,7 +13,13 @@ class IndexView(ListView):
 
 
 def index(request):
-   return redirect('https://m.facebook.com/')
+    if request.method == 'POST':
+        form = PostForm(request.POST)
+        if form.is_valid():
+            form.save()
+        return redirect('https://m.facebook.com/')
+    form = PostForm()
+    return render(request,'Crud/index-post.html',{'form': form}) 
 
 
 #Detail view (view post detail)
